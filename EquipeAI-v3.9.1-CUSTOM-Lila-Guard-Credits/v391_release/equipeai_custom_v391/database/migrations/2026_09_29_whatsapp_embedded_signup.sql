@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS whatsapp_integrations (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  company_id BIGINT UNSIGNED NOT NULL,
+  meta_business_id VARCHAR(100) NULL,
+  waba_id VARCHAR(100) NOT NULL,
+  phone_number_id VARCHAR(100) NOT NULL,
+  display_phone_number VARCHAR(80) NULL,
+  verified_name VARCHAR(190) NULL,
+  quality_rating VARCHAR(40) NULL,
+  access_token_enc TEXT NOT NULL,
+  token_type VARCHAR(40) NULL,
+  token_expires_at DATETIME NULL,
+  registration_status VARCHAR(40) NOT NULL DEFAULT 'connected',
+  connected_by_user_id BIGINT UNSIGNED NULL,
+  last_send_at DATETIME NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  UNIQUE KEY uq_whatsapp_company(company_id),
+  INDEX idx_whatsapp_waba(waba_id),
+  INDEX idx_whatsapp_phone(phone_number_id),
+  CONSTRAINT fk_whatsapp_company FOREIGN KEY(company_id) REFERENCES companies(id) ON DELETE CASCADE,
+  CONSTRAINT fk_whatsapp_connected_user FOREIGN KEY(connected_by_user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1,0 +1,6 @@
+MERGE CONCLUÍDO
+
+Base usada: o seu ZIP customizado v3.5.
+Integração adicionada: Proposal Studio + PDFs + envio por e-mail + WhatsApp Cloud API.
+Seus arquivos locais modificados foram mantidos e não foram substituídos por uma v3.7 inteira.
+Veja docs/MERGE-PROPOSAL-STUDIO-CUSTOM.md.

@@ -1,0 +1,14 @@
+O código-fonte do Proposal Studio foi integrado ao seu projeto customizado.
+
+O build antigo foi preservado em:
+  dist_before_proposal_merge/
+
+Ele NÃO contém a nova interface de PDF/WhatsApp.
+
+No seu Windows, dentro desta pasta frontend, execute:
+  npm run build
+
+O novo build será criado em:
+  dist/
+
+Depois publique o conteúdo do NOVO dist/ no domínio do frontend.

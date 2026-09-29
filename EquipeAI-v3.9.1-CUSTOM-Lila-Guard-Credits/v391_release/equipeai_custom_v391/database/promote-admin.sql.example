@@ -1,0 +1,4 @@
+-- Troque o e-mail e execute uma única vez após cadastrar sua conta.
+UPDATE users
+SET role = 'admin', updated_at = NOW()
+WHERE email = 'seu-email@dominio.com';

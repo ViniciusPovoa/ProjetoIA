@@ -1,0 +1,14 @@
+
+> equipeai@3.9.1 dev
+> vite --mode production --host 127.0.0.1 --port 5173
+
+
+  VITE v7.1.7   production   ready in 345 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+14:31:53 [vite] (client) hmr update /src/pages/AgentRunner.tsx
+14:32:00 [vite] (client) hmr update /src/pages/AgentRunner.tsx
+14:32:19 [vite] (client) hmr update /src/pages/AgentRunner.tsx
+14:32:19 [vite] (client) hmr update /src/ux2026.css
+15:28:34 [vite] (client) hmr update /src/components/ProposalStudio.tsx
+15:28:34 [vite] (client) hmr update /src/components/ProposalStudio.tsx

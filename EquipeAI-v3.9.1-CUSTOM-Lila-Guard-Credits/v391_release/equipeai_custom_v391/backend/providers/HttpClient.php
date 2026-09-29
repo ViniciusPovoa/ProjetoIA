@@ -1,0 +1,7 @@
+<?php
+namespace App\providers;
+use RuntimeException;
+final class HttpClient {
+    public static function request(string $method,string $url,array $headers=[],?array $body=null):array{$ch=curl_init($url);$opts=[CURLOPT_CUSTOMREQUEST=>$method,CURLOPT_RETURNTRANSFER=>true,CURLOPT_CONNECTTIMEOUT=>12,CURLOPT_TIMEOUT=>90,CURLOPT_HTTPHEADER=>array_merge(['Accept: application/json'], $body!==null?['Content-Type: application/json']:[], $headers)];$caFile=env('CURL_CA_BUNDLE','');if($caFile&&is_file($caFile))$opts[CURLOPT_CAINFO]=$caFile;if($body!==null)$opts[CURLOPT_POSTFIELDS]=json_encode($body,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);curl_setopt_array($ch,$opts);$raw=curl_exec($ch);$code=(int)curl_getinfo($ch,CURLINFO_HTTP_CODE);$err=curl_error($ch);curl_close($ch);if($raw===false||$err)throw new RuntimeException('Falha de conexão com serviço externo.');$data=json_decode((string)$raw,true);if($code<200||$code>=300){$msg=is_array($data)?($data['error']['message']??$data['errors'][0]['message']??$data['message']??'Erro externo'):'Erro externo';throw new RuntimeException('Serviço externo retornou HTTP '.$code.': '.mb_substr((string)$msg,0,240));}return is_array($data)?$data:[];}
+    public static function post(string $url,array $headers,array $body):array{return self::request('POST',$url,$headers,$body);}public static function get(string $url,array $headers=[]):array{return self::request('GET',$url,$headers,null);}public static function put(string $url,array $headers,array $body):array{return self::request('PUT',$url,$headers,$body);}
+}

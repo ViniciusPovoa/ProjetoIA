@@ -1,0 +1,6 @@
+<?php
+namespace App\controllers;
+use App\config\Database;
+final class DashboardController {
+    public function show(array $u):array{$pdo=Database::get();$c=$pdo->prepare('SELECT balance FROM user_credits WHERE user_id=?');$c->execute([$u['id']]);$balance=(int)$c->fetchColumn();$a=$pdo->prepare('SELECT ar.id,a.name agent_name,a.icon,ar.credits_used,ar.created_at FROM agent_runs ar JOIN agents a ON a.id=ar.agent_id WHERE ar.user_id=? AND ar.status=\'success\' ORDER BY ar.id DESC LIMIT 6');$a->execute([$u['id']]);$s=$pdo->prepare("SELECT s.status,s.current_period_end,p.name,p.price,p.credits,p.slug FROM subscriptions s JOIN plans p ON p.id=s.plan_id WHERE s.user_id=? LIMIT 1");$s->execute([$u['id']]);$sub=$s->fetch()?:null;$usage=$pdo->prepare("SELECT COALESCE(SUM(credits_used),0) credits,COUNT(*) runs FROM agent_runs WHERE user_id=? AND status='success' AND created_at>=DATE_FORMAT(NOW(),'%Y-%m-01')");$usage->execute([$u['id']]);$month=$usage->fetch();$company=$pdo->prepare('SELECT name,onboarding_step FROM companies WHERE id=?');$company->execute([$u['company_id']]);return ['credits'=>$balance,'recent'=>$a->fetchAll(),'subscription'=>$sub,'month_usage'=>['credits'=>(int)$month['credits'],'runs'=>(int)$month['runs']],'company'=>$company->fetch()];}
+}

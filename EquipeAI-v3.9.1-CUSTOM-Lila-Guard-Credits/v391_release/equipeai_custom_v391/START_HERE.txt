@@ -1,0 +1,26 @@
+EQUIPEAI — COMECE AQUI
+=====================
+
+1) Leia README.md.
+2) Crie um banco MySQL e importe database/schema.sql.
+3) Copie backend/.env.example para backend/.env e preencha banco + URLs.
+4) Configure pelo menos um provider de IA. Para o Agente de Documentos/PDF, configure GEMINI_API_KEY.
+5) Entre em frontend/, rode: npm install && npm run build (ou npm run dev para desenvolvimento).
+6) Cadastre sua conta e promova-a para admin usando database/promote-admin.sql.example.
+7) No admin, revise modelos e INFORME OS CUSTOS ATUAIS por milhão de tokens.
+8) Configure Mercado Pago + webhook /api/webhooks/mercadopago.
+9) Configure SMTP e cron backend/cron/maintenance.php.
+10) Siga docs/TESTING.md antes de receber clientes.
+
+DEPLOY CPANEL
+-------------
+Leia docs/DEPLOY-CPANEL.md ou execute ./scripts/package-cpanel.sh em uma máquina com Node/NPM.
+
+ESCOPO
+------
+CHECKLIST-44-44.md mostra como cada uma das 44 seções do TXT foi implementada.
+
+IMPORTANTE
+----------
+Não coloque .env, API keys, senha de banco, token Mercado Pago ou dumps de produção no Git/public_html.
+Use HTTPS e backups antes de vender.

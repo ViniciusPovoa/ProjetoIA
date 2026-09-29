@@ -1,0 +1,12 @@
+Options -Indexes -MultiViews
+RewriteEngine On
+
+# Esta conta FTP abre diretamente na raiz do backend. Expõe somente a API.
+RewriteRule ^api(?:/.*)?$ public/index.php [QSA,L]
+
+# Bloqueia acesso HTTP ao código e aos dados internos.
+RewriteRule ^(?:config|contracts|controllers|cron|middleware|providers|repositories|services|storage|utils)(?:/|$) - [F,L]
+
+<FilesMatch "(^\.env|\.log$|composer\.(json|lock)$|\.sql$)">
+  Require all denied
+</FilesMatch>

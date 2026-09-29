@@ -1,0 +1,8 @@
+import {useEffect,useState} from 'react';
+import {Link,useSearchParams} from 'react-router-dom';
+import {FiAlertTriangle,FiCheck,FiLoader} from 'react-icons/fi';
+import {api} from '../api';
+import Brand from '../components/Brand';
+
+type State='loading'|'success'|'error';
+export default function VerifyEmail(){const[q]=useSearchParams();const[state,setState]=useState<State>('loading');const[msg,setMsg]=useState('Validando o link de segurança…');useEffect(()=>{const token=q.get('token')||'';if(!token){setState('error');setMsg('O link de verificação está incompleto.');return}api.post('/auth/verify-email',{token}).then(r=>{setState('success');setMsg(r.data.message);sessionStorage.removeItem('pending_verification_email');sessionStorage.removeItem('pending_verification_masked');sessionStorage.removeItem('pending_verification_sent')}).catch((x:any)=>{setState('error');setMsg(x.response?.data?.error||'Não foi possível validar este link.')})},[]);return <div className="verification-page"><header><Brand/></header><main className={`verification-card verify-result ${state}`}><div className="verification-icon">{state==='loading'?<FiLoader className="spin"/>:state==='success'?<FiCheck/>:<FiAlertTriangle/>}</div><span className="auth-step">SEGURANÇA DA CONTA</span><h1>{state==='loading'?'Verificando…':state==='success'?'E-mail confirmado':'Não foi possível confirmar'}</h1><p>{msg}</p>{state==='success'?<Link className="btn-primary-custom big" to="/login">Entrar no workspace</Link>:state==='error'?<Link className="btn-ghost big" to="/verificacao-enviada">Solicitar novo link</Link>:null}</main></div>}
